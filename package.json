@@ -11,6 +11,7 @@
         "@types/react": "^16.9.0",
         "@types/react-dom": "^16.9.0",
         "react": "^16.13.1",
+        "react-atlantic": "^0.5.73",
         "react-dom": "^16.13.1",
         "react-scripts": "3.4.1",
         "typescript": "~3.7.2"
@@ -39,7 +40,6 @@
         ]
     },
     "devDependencies": {
-        "eslint": "^7.4.0",
         "prettier": "^2.0.5"
     }
 }
