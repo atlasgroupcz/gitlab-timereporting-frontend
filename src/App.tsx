@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { AtlanticProvider, theme } from 'react-atlantic';
 import { ThemeProvider } from 'styled-components';
 import { Index } from './pages';
-export const App = () => {
+import { ValidationSchemasProvider } from './context/ValidationSchemas';
+
+export const App: FC = () => {
     return (
-        <ThemeProvider theme={theme}>
-            <AtlanticProvider theme={theme}>
-                <Index></Index>
-            </AtlanticProvider>
-        </ThemeProvider>
+        <ValidationSchemasProvider>
+            <ThemeProvider theme={theme}>
+                <AtlanticProvider theme={theme}>
+                    <Index></Index>
+                </AtlanticProvider>
+            </ThemeProvider>
+        </ValidationSchemasProvider>
     );
 };
