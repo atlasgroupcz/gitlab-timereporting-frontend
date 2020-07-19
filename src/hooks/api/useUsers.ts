@@ -1,4 +1,4 @@
-import { IUser } from '../../interfaces/IUser';
+import { IUser } from '../../types/IUser';
 import { useFetch } from '../useFetch';
 
 export const useUsers = () => {
