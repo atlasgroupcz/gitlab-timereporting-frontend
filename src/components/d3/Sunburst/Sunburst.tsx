@@ -1,20 +1,23 @@
-import React, { useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { styled } from '../../../utils/styled';
 import { Box } from '../../container';
-import define from './lib/index.js';
-//@ts-ignore
-import { Runtime, Inspector } from '@observablehq/runtime';
+import { chart } from './d3';
+import { data } from './data';
 
-export const Sunburst = () => {
-    const svgRef = useRef<HTMLDivElement | null>(null);
+export const Sunburst: FC = () => {
+    const svgRef = useRef<SVGSVGElement | null>(null);
+
     useEffect(() => {
-        const runtime = new (Runtime as any)();
-        runtime.module(define, Inspector.into(svgRef));
+        svgRef.current && chart(svgRef.current, data);
     }, []);
 
-    return <StyledContainer ref={svgRef}></StyledContainer>;
+    return (
+        <StyledContainer>
+            <svg ref={svgRef}></svg>
+        </StyledContainer>
+    );
 };
 
 const StyledContainer = styled(Box)`
-    width: 500px;
+    width: 60%;
 `;

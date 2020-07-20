@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-
 import { AtlanticProvider, theme } from 'react-atlantic';
 import { ThemeProvider } from 'styled-components';
 
@@ -26,7 +25,7 @@ export const App: FC = () => {
                         <HomeRoute path="/" />
                         <ExcelReportRoute path="excel" />
                         <CalendarReportRoute path="calendar" />
-                        <HierarchyReportRoute path="calendar" />
+                        <HierarchyReportRoute path="hierarchy" />
                     </Router>
                 </AtlanticProvider>
             </ThemeProvider>

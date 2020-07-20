@@ -26,7 +26,10 @@ export const chart = (
     const formatDay = (d) => 'SMTWTFS'[d.getUTCDay()];
     const timeWeek = weekday === 'sunday' ? d3.utcSunday : d3.utcMonday;
     const formatDate = d3.utcFormat('%x');
-    const color = d3.scaleLinear().range(['white', 'green']).domain([0, 1000]);
+    const color = d3
+        .scaleLinear()
+        .range(['white', '#1990EA'])
+        .domain([0, 1000]);
     const pathMonth = (t) => {
         const n = weekday === 'weekday' ? 5 : 7;
         const d = Math.max(0, Math.min(n, countDay(t)));
