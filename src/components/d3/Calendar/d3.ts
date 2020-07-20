@@ -28,7 +28,7 @@ export const chart = (
     const formatDate = d3.utcFormat('%x');
     const color = d3
         .scaleLinear()
-        .range(['white', '#1990EA'])
+        .range(['#f0feff', '#1990EA'])
         .domain([0, 1000]);
     const pathMonth = (t) => {
         const n = weekday === 'weekday' ? 5 : 7;
