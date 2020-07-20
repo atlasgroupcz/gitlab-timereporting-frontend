@@ -16,8 +16,6 @@ export const CalendarReport = () => {
         { data: calendarData },
     ] = useCalendarReportForm();
 
-    console.log(values);
-
     const onChange = (field: string) => (option: any) =>
         setFieldValue(field, option);
     const onSubmit = handleSubmit as any;
