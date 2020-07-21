@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC } from 'react';
+import { AtlanticProvider, theme } from 'react-atlantic';
+import { ThemeProvider } from 'styled-components';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import { ValidationSchemasProvider } from './context/ValidationSchemas';
+import { CalendarReport } from './pages/CalendarReport';
+import { RouteComponentProps } from '@reach/router';
+import { GlobalStyle } from './Global.style';
+import { Home, ExcelReport, HierarchyReport } from './pages';
+import { StyledRouterContainer } from './pages/style';
 
-export default App;
+const HomeRoute = (_props: RouteComponentProps) => <Home />;
+const CalendarReportRoute = (_props: RouteComponentProps) => <CalendarReport />;
+const ExcelReportRoute = (_props: RouteComponentProps) => <ExcelReport />;
+const HierarchyReportRoute = (_props: RouteComponentProps) => (
+    <HierarchyReport />
+);
+
+export const App: FC = () => {
+    return (
+        <ValidationSchemasProvider>
+            <ThemeProvider theme={theme}>
+                <AtlanticProvider theme={theme}>
+                    <StyledRouterContainer>
+                        <HomeRoute path="/" />
+                        <ExcelReportRoute path="excel" />
+                        <CalendarReportRoute path="calendar" />
+                        <HierarchyReportRoute path="hierarchy" />
+                    </StyledRouterContainer>
+                    <GlobalStyle />
+                </AtlanticProvider>
+            </ThemeProvider>
+        </ValidationSchemasProvider>
+    );
+};
