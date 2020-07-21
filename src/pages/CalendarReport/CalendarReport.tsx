@@ -12,12 +12,16 @@ import {
 } from './style';
 import { Container } from '../../components/Template/Container';
 import { Form } from '../../components/Form';
+import { Header } from '../../components/Header';
+import { ErrorMessage } from '../../components/ErrorMessage';
+
+const INITIAL_YEAR = 2020;
 
 export const CalendarReport = () => {
     const [, { data: userData }] = useUsers();
 
     const [
-        { values, handleSubmit, setFieldValue },
+        { values, handleSubmit, setFieldValue, errors, status },
         { data: calendarData },
     ] = useCalendarReportForm();
 
@@ -25,17 +29,16 @@ export const CalendarReport = () => {
         setFieldValue(field, option);
     const onSubmit = handleSubmit as any;
 
-    // TODO: přidat logiku pro konstantu
-    const areFieldsFilled = false;
-    const formFooter = [
-        <Button type="primary" onClick={onSubmit} isDisabled={!areFieldsFilled}>
-            <Text>Zobrazit kalendář</Text>
-        </Button>,
-    ];
-
     return (
         <StyledCalendarReportContainer>
-            <StyledCalendarReportForm footer={formFooter}>
+            <Header />
+            <StyledCalendarReportForm
+                FooterComponent={
+                    <Button type="primary" onClick={onSubmit}>
+                        <Text>Zobrazit kalendář</Text>
+                    </Button>
+                }
+            >
                 <Form.Item>
                     <Select
                         onChange={({ value }) => onChange('userId')(value)}
@@ -52,15 +55,17 @@ export const CalendarReport = () => {
                                 </Option>
                             ))}
                     </Select>
+                    <ErrorMessage errors={errors.userId} />
                 </Form.Item>
                 <Form.Item>
                     <YearSelect
-                        fromYear={2010}
-                        amount={20}
+                        fromYear={INITIAL_YEAR}
+                        amount={new Date().getFullYear() - INITIAL_YEAR + 1}
                         onChange={({ value }) => onChange('year')(value)}
                         value={values.year}
                         placeholder={'Vyberte rok'}
                     />
+                    <ErrorMessage errors={errors.year || status} />
                 </Form.Item>
             </StyledCalendarReportForm>
             {calendarData && (

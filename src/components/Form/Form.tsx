@@ -1,29 +1,20 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { StyledForm, StyledFormElements, StyledFormFooter } from './style';
 import { Item, ItemProps } from './Item';
-import { useComposition } from 'react-atlantic/lib';
 
 interface FormProps {
-    footer?: ReactElement[];
+    FooterComponent?: ReactNode;
     className?: string;
 }
 
 export const Form: FC<FormProps> & {
     Item: FC<ItemProps>;
-} = (props): ReactElement => {
-    const { footer, className, children } = props;
-    const { getFilteredChildren } = useComposition();
-
-    const items = getFilteredChildren(children, Form.Item.displayName);
+} = (props) => {
+    const { FooterComponent: footer, className, children } = props;
 
     return (
         <StyledForm className={className}>
-            <StyledFormElements>
-                {items.map((item, index) => (
-                    <Form.Item key={index} {...item.props}>{item.props?.children}</Form.Item>
-                ))}
-            </StyledFormElements>
-
+            <StyledFormElements>{children}</StyledFormElements>
             {footer && <StyledFormFooter>{footer}</StyledFormFooter>}
         </StyledForm>
     );

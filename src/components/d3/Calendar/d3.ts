@@ -50,6 +50,8 @@ export const chart = (
         .attr('font-family', 'sans-serif')
         .attr('font-size', 10);
 
+    svg.selectAll('*').remove();
+
     const year = svg
         .selectAll('g')
         .data(years)

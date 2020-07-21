@@ -4,8 +4,14 @@ import { useHierarchyReportForm } from '../../hooks/forms/useHierarchyReportForm
 
 import { Sunburst } from '../../components/d3/Sunburst';
 import { HierarchyType } from '../../types/HierarchyType';
-import {StyledHierarchyContainer, StyledHierarchyContent, StyledHierarchyForm} from './style';
+import {
+    StyledHierarchyContainer,
+    StyledHierarchyContent,
+    StyledHierarchyForm,
+} from './style';
 import { Form } from '../../components/Form';
+import { Header } from '../../components/Header';
+import { ErrorMessage } from '../../components/ErrorMessage';
 
 const HIERARCHY_ELEMENTS: HierarchyType[] = [
     'ISSUE',
@@ -17,7 +23,7 @@ const HIERARCHY_ELEMENTS: HierarchyType[] = [
 
 export const HierarchyReport = () => {
     const [
-        { values, handleSubmit, setFieldValue },
+        { values, handleSubmit, setFieldValue, errors, status },
         { data },
     ] = useHierarchyReportForm();
 
@@ -63,13 +69,15 @@ export const HierarchyReport = () => {
 
     return (
         <StyledHierarchyContainer>
-            <StyledHierarchyForm footer={formFooter}>
+            <Header />
+            <StyledHierarchyForm FooterComponent={formFooter}>
                 <Form.Item>
                     <DatePicker
                         placeholder="Od"
                         onChange={onChange('from')}
                         selected={values.from}
                     ></DatePicker>
+                    <ErrorMessage errors={errors.from} />
                 </Form.Item>
                 <Form.Item>
                     <DatePicker
@@ -77,6 +85,7 @@ export const HierarchyReport = () => {
                         onChange={onChange('to')}
                         selected={values.to}
                     ></DatePicker>
+                    <ErrorMessage errors={errors.to || status} />
                 </Form.Item>
                 {values.hierarchy.map((element, i) => (
                     <Form.Item isFullWidth>
@@ -91,19 +100,21 @@ export const HierarchyReport = () => {
                         </Select>
                     </Form.Item>
                 ))}
-                <Form.Item isFullWidth>
-                    <Select
-                        placeholder="Další"
-                        value={''}
-                        onChange={({ value }) => onPushHierarchy(value)}
-                    >
-                        {remainingElements.map((element) => (
-                            <Option key={element} value={element}>
-                                <Text>{element}</Text>
-                            </Option>
-                        ))}
-                    </Select>
-                </Form.Item>
+                {remainingElements.length && (
+                    <Form.Item isFullWidth>
+                        <Select
+                            placeholder="Další"
+                            value={''}
+                            onChange={({ value }) => onPushHierarchy(value)}
+                        >
+                            {remainingElements.map((element) => (
+                                <Option key={element} value={element}>
+                                    <Text>{element}</Text>
+                                </Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                )}
             </StyledHierarchyForm>
 
             {data && (

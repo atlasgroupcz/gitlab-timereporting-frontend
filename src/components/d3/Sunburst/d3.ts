@@ -3,8 +3,6 @@
 import * as d3 from 'd3';
 
 export const chart = (svgRef: SVGSVGElement, data: any) => {
-    console.log(svgRef, data);
-
     const width = 250;
     const radius = width / 2;
     const format = d3.format(',d');
@@ -18,7 +16,18 @@ export const chart = (svgRef: SVGSVGElement, data: any) => {
 
     const root = partition(data);
     const color = d3.scaleOrdinal(
-        d3.quantize(d3.interpolateRainbow, data.children.length + 1)
+        d3.quantize(
+            d3.piecewise(d3.interpolateHsl, [
+                '#1990EA',
+                '#c4e6ff',
+                '#1990EA',
+                '#c4e6ff',
+                '#1990EA',
+                '#c4e6ff',
+                '#1990EA',
+            ]),
+            data.children.length + 1
+        )
     );
 
     const arc = d3
@@ -36,6 +45,8 @@ export const chart = (svgRef: SVGSVGElement, data: any) => {
         .select(svgRef)
         .attr('viewBox', [0, 0, width, width])
         .style('font', '10px sans-serif');
+
+    svg.selectAll('*').remove();
 
     const g = svg
         .append('g')
