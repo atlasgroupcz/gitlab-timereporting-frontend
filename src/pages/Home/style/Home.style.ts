@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { Icon } from '../../../components/Icon';
 import { DeviceType } from 'react-atlantic/lib';
-import { PageContainer } from '../../components/PageContainer';
+import { Container } from '../../../components/Template/Container';
 
 interface StyledHomePageProps {
     currentDevice: DeviceType;
@@ -11,8 +11,9 @@ export const StyledHomePageColumn = styled.div`
     position: relative;
     max-width: calc((100% / 3) - 30px);
     width: 260px;
-    border: 2px solid ${(props) => props.theme.color.border};
+    border: 1px solid ${(props) => props.theme.color.border};
     border-radius: ${(props) => props.theme.radius};
+    background-color: ${props => props.theme.color.background.alpha};
 
     &:after {
         content: '';
@@ -42,7 +43,7 @@ export const StyledHomePageIcon = styled(Icon)`
     }
 `;
 
-export const StyledHomePage = styled(PageContainer)<StyledHomePageProps>`
+export const StyledHomePage = styled(Container)<StyledHomePageProps>`
     display: flex;
     align-items: center;
     justify-content: space-around;
