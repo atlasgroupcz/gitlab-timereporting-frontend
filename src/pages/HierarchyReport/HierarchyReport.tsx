@@ -1,12 +1,11 @@
 import React from 'react';
 import { Button, DatePicker, Option, Select, Text } from 'react-atlantic';
-import { Box, Column, Row } from '../../components/container';
-import { StyledOption } from 'react-atlantic/lib/components/Select/components/Option/Option.style';
-import { styled } from '../../utils/styled';
 import { useHierarchyReportForm } from '../../hooks/forms/useHierarchyReportForm';
 
 import { Sunburst } from '../../components/d3/Sunburst';
 import { HierarchyType } from '../../types/HierarchyType';
+import {StyledHierarchyContainer, StyledHierarchyContent, StyledHierarchyForm} from './style';
+import { Form } from '../../components/Form';
 
 const HIERARCHY_ELEMENTS: HierarchyType[] = [
     'ISSUE',
@@ -53,58 +52,65 @@ export const HierarchyReport = () => {
     ];
     console.log(data);
 
+    let formFooter = [
+        <Button type="primary" onClick={onSubmit}>
+            <Text>Zobrazit</Text>
+        </Button>,
+        <Button type="default" onClick={resetHierarchy}>
+            <Text>Resetovat</Text>
+        </Button>,
+    ];
+
     return (
-        <StyledSelectContainer>
-            <Column>
-                <Row>
+        <StyledHierarchyContainer>
+            <StyledHierarchyForm footer={formFooter}>
+                <Form.Item>
                     <DatePicker
-                        placeholder="From"
+                        placeholder="Od"
                         onChange={onChange('from')}
                         selected={values.from}
                     ></DatePicker>
-                </Row>
-                <Row>
+                </Form.Item>
+                <Form.Item>
                     <DatePicker
-                        placeholder="To"
+                        placeholder="Do"
                         onChange={onChange('to')}
                         selected={values.to}
                     ></DatePicker>
-                </Row>
-            </Column>
-
-            {values.hierarchy.map((element, i) => (
-                <Select
-                    key={i}
-                    onChange={({ value }) => onChangeHierarchy(value, i)}
-                    value={element}
-                >
-                    {renderOptions(element)}
-                </Select>
-            ))}
-            <Select
-                placeholder="Další"
-                value={''}
-                onChange={({ value }) => onPushHierarchy(value)}
-            >
-                {remainingElements.map((element) => (
-                    <Option key={element} value={element}>
-                        <Text>{element}</Text>
-                    </Option>
+                </Form.Item>
+                {values.hierarchy.map((element, i) => (
+                    <Form.Item isFullWidth>
+                        <Select
+                            key={i}
+                            onChange={({ value }) =>
+                                onChangeHierarchy(value, i)
+                            }
+                            value={element}
+                        >
+                            {renderOptions(element)}
+                        </Select>
+                    </Form.Item>
                 ))}
-            </Select>
-            <Button type="primary" onClick={onSubmit}>
-                Submit
-            </Button>
-            <Button type="default" onClick={resetHierarchy}>
-                Reset
-            </Button>
-            {data && <Sunburst data={data} />}
-        </StyledSelectContainer>
+                <Form.Item isFullWidth>
+                    <Select
+                        placeholder="Další"
+                        value={''}
+                        onChange={({ value }) => onPushHierarchy(value)}
+                    >
+                        {remainingElements.map((element) => (
+                            <Option key={element} value={element}>
+                                <Text>{element}</Text>
+                            </Option>
+                        ))}
+                    </Select>
+                </Form.Item>
+            </StyledHierarchyForm>
+
+            {data && (
+                <StyledHierarchyContent>
+                    <Sunburst data={data} />
+                </StyledHierarchyContent>
+            )}
+        </StyledHierarchyContainer>
     );
 };
-
-const StyledSelectContainer = styled(Box)`
-    ${StyledOption} {
-        height: auto;
-    }
-`;

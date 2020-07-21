@@ -15,28 +15,30 @@ export const ExcelReport = () => {
     const onSubmit = handleSubmit as any;
     console.log(errors);
 
-    const formItems = [
-        <DatePicker
-            placeholder="Od"
-            onChange={onChange('from')}
-            selected={values.from}
-        ></DatePicker>,
-        <DatePicker
-            placeholder="Do"
-            onChange={onChange('to')}
-            selected={values.to}
-        ></DatePicker>,
-    ];
-
-    const formFooter = (
+    const formFooter = [
         <Button type="primary" onClick={onSubmit}>
             <Text>Stáhnout soubor</Text>
-        </Button>
-    );
+        </Button>,
+    ];
 
     return (
         <StyledExcelReportContainer>
-            <Form items={formItems} footer={formFooter} />
+            <Form footer={formFooter}>
+                <Form.Item>
+                    <DatePicker
+                        placeholder="Od"
+                        onChange={onChange('from')}
+                        selected={values.from}
+                    ></DatePicker>
+                </Form.Item>
+                <Form.Item>
+                    <DatePicker
+                        placeholder="Do"
+                        onChange={onChange('to')}
+                        selected={values.to}
+                    ></DatePicker>
+                </Form.Item>
+            </Form>
         </StyledExcelReportContainer>
     );
 };

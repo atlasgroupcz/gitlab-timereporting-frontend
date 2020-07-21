@@ -11,6 +11,7 @@ import {
     StyledCalendarReportForm,
 } from './style';
 import { Container } from '../../components/Template/Container';
+import { Form } from '../../components/Form';
 
 export const CalendarReport = () => {
     const [, { data: userData }] = useUsers();
@@ -24,42 +25,44 @@ export const CalendarReport = () => {
         setFieldValue(field, option);
     const onSubmit = handleSubmit as any;
 
-    const formItems = [
-        <Select
-            onChange={({ value }) => onChange('userId')(value)}
-            value={values.userId}
-            placeholder={'Vyberte uživatele'}
-        >
-            {userData &&
-                userData.map(({ id, name, email }) => (
-                    <Option key={id} value={id}>
-                        <Column>
-                            <Text type="primary">{name}</Text>
-                            <Text type="default">{email}</Text>
-                        </Column>
-                    </Option>
-                ))}
-        </Select>,
-        <YearSelect
-            fromYear={2010}
-            amount={20}
-            onChange={({ value }) => onChange('year')(value)}
-            value={values.year}
-            placeholder={'Vyberte rok'}
-        />,
-    ];
-
     // TODO: přidat logiku pro konstantu
     const areFieldsFilled = false;
-    const formButton = (
+    const formFooter = [
         <Button type="primary" onClick={onSubmit} isDisabled={!areFieldsFilled}>
             <Text>Zobrazit kalendář</Text>
-        </Button>
-    );
+        </Button>,
+    ];
 
     return (
         <StyledCalendarReportContainer>
-            <StyledCalendarReportForm items={formItems} footer={formButton} />
+            <StyledCalendarReportForm footer={formFooter}>
+                <Form.Item>
+                    <Select
+                        onChange={({ value }) => onChange('userId')(value)}
+                        value={values.userId}
+                        placeholder={'Vyberte uživatele'}
+                    >
+                        {userData &&
+                            userData.map(({ id, name, email }) => (
+                                <Option key={id} value={id}>
+                                    <Column>
+                                        <Text type="primary">{name}</Text>
+                                        <Text type="default">{email}</Text>
+                                    </Column>
+                                </Option>
+                            ))}
+                    </Select>
+                </Form.Item>
+                <Form.Item>
+                    <YearSelect
+                        fromYear={2010}
+                        amount={20}
+                        onChange={({ value }) => onChange('year')(value)}
+                        value={values.year}
+                        placeholder={'Vyberte rok'}
+                    />
+                </Form.Item>
+            </StyledCalendarReportForm>
             {calendarData && (
                 <StyledCalendarReportContent>
                     <Container>

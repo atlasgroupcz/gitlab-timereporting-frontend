@@ -17,7 +17,7 @@ export const Home = () => {
                 <StyledHomePageColumnContent>
                     <StyledHomePageIcon name={'hierarchy'} />
                     <Link to="hierarchy">
-                        <Button type="primary">Hierarchy</Button>
+                        <Button type="primary">Zobrazit v hierarchii</Button>
                     </Link>
                 </StyledHomePageColumnContent>
             </StyledHomePageColumn>
@@ -25,7 +25,7 @@ export const Home = () => {
                 <StyledHomePageColumnContent>
                     <StyledHomePageIcon name={'calendar'} />
                     <Link to="calendar">
-                        <Button type="primary">Calendar</Button>
+                        <Button type="primary">Zobrazit v kalendáři</Button>
                     </Link>
                 </StyledHomePageColumnContent>
             </StyledHomePageColumn>
@@ -33,7 +33,7 @@ export const Home = () => {
                 <StyledHomePageColumnContent>
                     <StyledHomePageIcon name={'excel'} />
                     <Link to="excel">
-                        <Button type="primary">Excel</Button>
+                        <Button type="primary">Export do souboru</Button>
                     </Link>
                 </StyledHomePageColumnContent>
             </StyledHomePageColumn>

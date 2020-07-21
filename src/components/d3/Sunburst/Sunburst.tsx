@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useRef } from 'react';
-import { styled } from '../../../utils/styled';
-import { Box } from '../../container';
 import { chart } from './d3';
+import { StyledSunBurstContainer } from './style/Sunburst.style';
 
 export const Sunburst: FC<{ data: any }> = ({ data }) => {
     const svgRef = useRef<SVGSVGElement | null>(null);
@@ -11,12 +10,8 @@ export const Sunburst: FC<{ data: any }> = ({ data }) => {
     }, [data]);
 
     return (
-        <StyledContainer>
+        <StyledSunBurstContainer>
             <svg ref={svgRef}></svg>
-        </StyledContainer>
+        </StyledSunBurstContainer>
     );
 };
-
-const StyledContainer = styled(Box)`
-    width: 60%;
-`;
