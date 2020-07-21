@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { Icon } from '../../../components/Icon';
 import { DeviceType } from 'react-atlantic/lib';
+import { PageContainer } from '../../components/PageContainer';
 
 interface StyledHomePageProps {
     currentDevice: DeviceType;
@@ -41,26 +42,26 @@ export const StyledHomePageIcon = styled(Icon)`
     }
 `;
 
-export const StyledHomePage = styled.div<StyledHomePageProps>`
+export const StyledHomePage = styled(PageContainer)<StyledHomePageProps>`
     display: flex;
     align-items: center;
     justify-content: space-around;
     min-height: 100%;
 
     ${(props) =>
-    (props.currentDevice === 'mobile' ||
-        props.currentDevice === 'tabletVertical') &&
-    css`
+        (props.currentDevice === 'mobile' ||
+            props.currentDevice === 'tabletVertical') &&
+        css`
             flex-direction: column;
             margin: ${props.theme.margin.lg};
-            
+
             ${StyledHomePageColumn} {
-              margin-bottom: ${props.theme.margin.lg};
-              max-width: calc(100% - 30px);
-              
-              &:last-child {
-                margin-bottom: 0;
-              }
+                margin-bottom: ${props.theme.margin.lg};
+                max-width: calc(100% - 30px);
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
             }
         `}
 `;
