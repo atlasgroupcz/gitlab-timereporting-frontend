@@ -1,12 +1,12 @@
 import React from 'react';
 import { Option, Select, Text, Button } from 'react-atlantic';
-import { Box, Column } from '../components/container';
-import { useUsers } from '../hooks/api/useUsers';
+import { Box, Column } from '../../components/container';
+import { useUsers } from '../../hooks/api/useUsers';
 import { StyledOption } from 'react-atlantic/lib/components/Select/components/Option/Option.style';
-import { styled } from '../utils/styled';
-import { useCalendarReportForm } from '../hooks/forms/useCalendarReportForm';
-import { YearSelect } from '../components/YearSelect';
-import { Calendar } from '../components/d3/Calendar';
+import { styled } from '../../utils/styled';
+import { useCalendarReportForm } from '../../hooks/forms/useCalendarReportForm';
+import { YearSelect } from '../../components/YearSelect';
+import { Calendar } from '../../components/d3/Calendar';
 
 export const CalendarReport = () => {
     const [, { data: userData }] = useUsers();

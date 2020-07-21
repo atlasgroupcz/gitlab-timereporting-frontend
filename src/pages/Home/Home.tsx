@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button } from 'react-atlantic';
-import { Box } from '../components/container';
+import { Box } from '../../components/container';
 import { StyledOption } from 'react-atlantic/lib/components/Select/components/Option/Option.style';
-import { styled } from '../utils/styled';
+import { styled } from '../../utils/styled';
 import { Link } from '@reach/router';
 
 export const Home = () => {
