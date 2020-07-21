@@ -4,10 +4,10 @@ import { ThemeProvider } from 'styled-components';
 
 import { ValidationSchemasProvider } from './context/ValidationSchemas';
 import { CalendarReport } from './pages/CalendarReport';
-import { Router, RouteComponentProps } from '@reach/router';
-import { Home } from './pages/Home';
-import { ExcelReport } from './pages/ExcelReport';
-import { HierarchyReport } from './pages/HierarchyReport';
+import { RouteComponentProps } from '@reach/router';
+import { GlobalStyle } from './Global.style';
+import { Home, ExcelReport, HierarchyReport } from './pages';
+import { StyledRouterContainer } from './pages/style';
 
 const HomeRoute = (_props: RouteComponentProps) => <Home />;
 const CalendarReportRoute = (_props: RouteComponentProps) => <CalendarReport />;
@@ -21,12 +21,13 @@ export const App: FC = () => {
         <ValidationSchemasProvider>
             <ThemeProvider theme={theme}>
                 <AtlanticProvider theme={theme}>
-                    <Router>
+                    <StyledRouterContainer>
                         <HomeRoute path="/" />
                         <ExcelReportRoute path="excel" />
                         <CalendarReportRoute path="calendar" />
                         <HierarchyReportRoute path="hierarchy" />
-                    </Router>
+                    </StyledRouterContainer>
+                    <GlobalStyle />
                 </AtlanticProvider>
             </ThemeProvider>
         </ValidationSchemasProvider>
