@@ -49,9 +49,11 @@ export const CalendarReport = () => {
         />,
     ];
 
+    // TODO: přidat logiku pro konstantu
+    const areFieldsFilled = false;
     const formButton = (
-        <Button type="primary" onClick={onSubmit}>
-            Zobrazit
+        <Button type="primary" onClick={onSubmit} isDisabled={!areFieldsFilled}>
+            <Text>Zobrazit kalendář</Text>
         </Button>
     );
 

@@ -1,9 +1,8 @@
 import React from 'react';
-import { DatePicker, Button } from 'react-atlantic';
-import { Box, Column, Row } from '../../components/container';
-import { StyledOption } from 'react-atlantic/lib/components/Select/components/Option/Option.style';
-import { styled } from '../../utils/styled';
+import { DatePicker, Button, Text } from 'react-atlantic';
 import { useExcelReportForm } from '../../hooks/forms/useExcelReportForm';
+import { StyledExcelReportContainer } from './style/ExcelReport.style';
+import { Form } from '../../components/Form';
 
 export const ExcelReport = () => {
     const [
@@ -16,33 +15,28 @@ export const ExcelReport = () => {
     const onSubmit = handleSubmit as any;
     console.log(errors);
 
+    const formItems = [
+        <DatePicker
+            placeholder="Od"
+            onChange={onChange('from')}
+            selected={values.from}
+        ></DatePicker>,
+        <DatePicker
+            placeholder="Do"
+            onChange={onChange('to')}
+            selected={values.to}
+        ></DatePicker>,
+    ];
+
+    const formFooter = (
+        <Button type="primary" onClick={onSubmit}>
+            <Text>Stáhnout soubor</Text>
+        </Button>
+    );
+
     return (
-        <StyledSelectContainer>
-            <Column>
-                <Row>
-                    <DatePicker
-                        placeholder="From"
-                        onChange={onChange('from')}
-                        selected={values.from}
-                    ></DatePicker>
-                </Row>
-                <Row>
-                    <DatePicker
-                        placeholder="To"
-                        onChange={onChange('to')}
-                        selected={values.to}
-                    ></DatePicker>
-                </Row>
-            </Column>
-            <Button type="primary" onClick={onSubmit}>
-                Submit
-            </Button>
-        </StyledSelectContainer>
+        <StyledExcelReportContainer>
+            <Form items={formItems} footer={formFooter} />
+        </StyledExcelReportContainer>
     );
 };
-
-const StyledSelectContainer = styled(Box)`
-    ${StyledOption} {
-        height: auto;
-    }
-`;
