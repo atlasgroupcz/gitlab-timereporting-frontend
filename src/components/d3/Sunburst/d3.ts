@@ -1,5 +1,4 @@
 //@ts-nocheck
-// https://observablehq.com/@d3/sunburst@240
 import * as d3 from 'd3';
 
 export const chart = (svgRef: SVGSVGElement, data: any) => {
