@@ -96,7 +96,9 @@ export const ValidationSchemasProvider: FC<ContextProps> = ({ children }) => {
                 from: date().required(
                     `${fields.from} ${validationMsgs.required}`
                 ),
-                to: date().required(`${fields.to} ${validationMsgs.required}`),
+                to: date()
+                    .required(`${fields.to} ${validationMsgs.required}`)
+                    .min(ref('from'), validationMsgs.invalidDates),
                 hierarchy: array(),
             }),
         }),

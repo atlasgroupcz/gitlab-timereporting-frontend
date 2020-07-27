@@ -1,7 +1,10 @@
 import styled, { css } from 'styled-components';
 import { StyledReactDatePickerHeaderContainer } from 'react-atlantic/lib/components/DatePicker/DatePickerHeader/DatePickerHeader.style';
 import { StyledOption } from 'react-atlantic/lib/components/Select/components/Option/Option.style';
-import { SingleValue } from 'react-atlantic/lib/components/Select/Select.style';
+import {
+    SingleValue,
+    SelectContainer,
+} from 'react-atlantic/lib/components/Select/Select.style';
 import { StyledText } from 'react-atlantic/lib/components/Typography/Text/Text.style';
 
 interface StyledFormElementsItemProps {
@@ -17,7 +20,6 @@ export const StyledFormElementsItem = styled.div<StyledFormElementsItemProps>`
         css`
             width: 100%;
         `}
-
     ${StyledReactDatePickerHeaderContainer} {
         box-sizing: content-box;
     }
@@ -30,5 +32,8 @@ export const StyledFormElementsItem = styled.div<StyledFormElementsItemProps>`
         ${StyledText} {
             margin: 0;
         }
+    }
+    ${SelectContainer} {
+        width: 250px;
     }
 `;

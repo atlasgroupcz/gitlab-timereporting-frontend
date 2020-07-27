@@ -15,7 +15,6 @@ export const ExcelReport = () => {
         date && setFieldValue(field, date);
     };
     const onSubmit = handleSubmit as any;
-    console.log(errors);
 
     const formFooter = [
         <Button type="primary" onClick={onSubmit}>

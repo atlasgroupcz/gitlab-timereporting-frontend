@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, DatePicker, Option, Select, Text } from 'react-atlantic';
 import { useHierarchyReportForm } from '../../hooks/forms/useHierarchyReportForm';
-
-import { Sunburst } from '../../components/d3/Sunburst';
 import { HierarchyType } from '../../types/HierarchyType';
 import {
     StyledHierarchyContainer,
@@ -12,6 +10,8 @@ import {
 import { Form } from '../../components/Form';
 import { Header } from '../../components/Header';
 import { ErrorMessage } from '../../components/ErrorMessage';
+import { Icicle } from '../../components/d3/Icicle';
+import { Sunburst } from '../../components/d3/Sunburst';
 
 const HIERARCHY_ELEMENTS: HierarchyType[] = [
     'ISSUE',
@@ -21,11 +21,23 @@ const HIERARCHY_ELEMENTS: HierarchyType[] = [
     'USER',
 ];
 
+const HIERARCHY_ELEMENTS_MAP: Record<HierarchyType, string> = {
+    ISSUE: 'Issue',
+    NAMESPACE: 'Namespace',
+    PRODUCT: 'Product',
+    PROJECT: 'Project',
+    USER: 'User',
+};
+type DisplayOptionsType = 'Sunburst' | 'Icicle';
 export const HierarchyReport = () => {
     const [
         { values, handleSubmit, setFieldValue, errors, status },
         { data },
     ] = useHierarchyReportForm();
+
+    const [displayOptions, setDisplayOptions] = useState<DisplayOptionsType[]>([
+        'Sunburst',
+    ]);
 
     const onChange = (field: string) => (option: any) =>
         setFieldValue(field, option);
@@ -48,15 +60,14 @@ export const HierarchyReport = () => {
 
     const renderOptions = (element: HierarchyType) => [
         <Option value={element}>
-            <Text type="primary">{element}</Text>
+            <Text type="primary">{HIERARCHY_ELEMENTS_MAP[element]}</Text>
         </Option>,
         ...remainingElements.map((element) => (
             <Option key={element} value={element}>
-                <Text key={element}>{element}</Text>
+                <Text key={element}>{HIERARCHY_ELEMENTS_MAP[element]}</Text>
             </Option>
         )),
     ];
-    console.log(data);
 
     let formFooter = [
         <Button type="primary" onClick={onSubmit}>
@@ -87,6 +98,31 @@ export const HierarchyReport = () => {
                     ></DatePicker>
                     <ErrorMessage errors={errors.to || status} />
                 </Form.Item>
+                <Form.Item>
+                    <Select
+                        isMulti
+                        placeholder="Display options"
+                        defaultValue={'Sunburst'}
+                        onChange={(values) =>
+                            setDisplayOptions(
+                                values?.map(
+                                    ({
+                                        value,
+                                    }: {
+                                        value: DisplayOptionsType;
+                                    }) => value
+                                ) ?? []
+                            )
+                        }
+                    >
+                        <Option value={'Sunburst'}>
+                            <Text>Sunburst</Text>
+                        </Option>
+                        <Option value={'Icicle'}>
+                            <Text>Icicle</Text>
+                        </Option>
+                    </Select>
+                </Form.Item>
                 {values.hierarchy.map((element, i) => (
                     <Form.Item isFullWidth>
                         <Select
@@ -100,7 +136,7 @@ export const HierarchyReport = () => {
                         </Select>
                     </Form.Item>
                 ))}
-                {remainingElements.length && (
+                {!!remainingElements.length && (
                     <Form.Item isFullWidth>
                         <Select
                             placeholder="Další"
@@ -109,7 +145,9 @@ export const HierarchyReport = () => {
                         >
                             {remainingElements.map((element) => (
                                 <Option key={element} value={element}>
-                                    <Text>{element}</Text>
+                                    <Text>
+                                        {HIERARCHY_ELEMENTS_MAP[element]}
+                                    </Text>
                                 </Option>
                             ))}
                         </Select>
@@ -117,9 +155,14 @@ export const HierarchyReport = () => {
                 )}
             </StyledHierarchyForm>
 
-            {data && (
+            {data && !!displayOptions?.length && (
                 <StyledHierarchyContent>
-                    <Sunburst data={data} />
+                    {displayOptions.includes('Sunburst') && (
+                        <Sunburst data={data} />
+                    )}
+                    {displayOptions.includes('Icicle') && (
+                        <Icicle data={data} />
+                    )}
                 </StyledHierarchyContent>
             )}
         </StyledHierarchyContainer>

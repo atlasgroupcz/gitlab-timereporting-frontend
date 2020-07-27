@@ -1,5 +1,5 @@
-import React from 'react';
-import { Option, Select, Text, Button } from 'react-atlantic';
+import React, { useMemo } from 'react';
+import { Text, Button } from 'react-atlantic';
 import { Column } from '../../components/container';
 import { useUsers } from '../../hooks/api/useUsers';
 import { useCalendarReportForm } from '../../hooks/forms/useCalendarReportForm';
@@ -14,6 +14,8 @@ import { Container } from '../../components/Template/Container';
 import { Form } from '../../components/Form';
 import { Header } from '../../components/Header';
 import { ErrorMessage } from '../../components/ErrorMessage';
+import { Select as UserSelect } from '../../components/UserSelect';
+import { OptionType } from 'react-atlantic/lib/components/Select/Select.utils';
 
 const INITIAL_YEAR = 2020;
 
@@ -29,6 +31,24 @@ export const CalendarReport = () => {
         setFieldValue(field, option);
     const onSubmit = handleSubmit as any;
 
+    const memoizedOptions: OptionType[] | undefined = useMemo(
+        () =>
+            userData &&
+            userData.map(
+                ({ id, name, email }) =>
+                    ({
+                        label: (
+                            <Column>
+                                <Text type="primary">{name}</Text>
+                                <Text type="default">{email}</Text>
+                            </Column>
+                        ),
+                        value: id,
+                    } as OptionType)
+            ),
+        [userData]
+    );
+
     return (
         <StyledCalendarReportContainer>
             <Header />
@@ -40,21 +60,11 @@ export const CalendarReport = () => {
                 }
             >
                 <Form.Item>
-                    <Select
+                    <UserSelect
                         onChange={({ value }) => onChange('userId')(value)}
                         value={values.userId}
-                        placeholder={'Vyberte uživatele'}
-                    >
-                        {userData &&
-                            userData.map(({ id, name, email }) => (
-                                <Option key={id} value={id}>
-                                    <Column>
-                                        <Text type="primary">{name}</Text>
-                                        <Text type="default">{email}</Text>
-                                    </Column>
-                                </Option>
-                            ))}
-                    </Select>
+                        options={memoizedOptions}
+                    ></UserSelect>
                     <ErrorMessage errors={errors.userId} />
                 </Form.Item>
                 <Form.Item>
