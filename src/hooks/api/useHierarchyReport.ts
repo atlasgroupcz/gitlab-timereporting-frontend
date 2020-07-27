@@ -15,7 +15,6 @@ export const useHierarchyReport = (
         undefined,
         false
     );
-    console.log('result', result);
 
     const fetchHierarchyReport = useCallback(
         async (

@@ -14,7 +14,6 @@ export const useExcelReportForm = () => {
         validateOnChange: false,
         onSubmit: ({ from, to }, { setSubmitting }) => {
             setSubmitting(true);
-            console.log(from);
 
             getExcelReport(formatDate(from), formatDate(to));
             setSubmitting(false);

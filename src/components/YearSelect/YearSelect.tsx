@@ -11,7 +11,6 @@ interface YearSelectProps extends SelectProps {
 const mapYearsToOptions = (from: number, amount: number, invert: boolean) => {
     return new Array(amount).fill(null).map((_n, i) => {
         const next = `${invert ? from - i : from + i}`;
-        console.log(next);
 
         return (
             <Option key={next} value={next}>

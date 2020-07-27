@@ -56,7 +56,6 @@ export const HierarchyReport = () => {
             </Option>
         )),
     ];
-    console.log(data);
 
     let formFooter = [
         <Button type="primary" onClick={onSubmit}>

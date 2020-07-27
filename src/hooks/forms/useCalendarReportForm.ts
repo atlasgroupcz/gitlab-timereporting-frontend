@@ -12,8 +12,6 @@ export const useCalendarReportForm = () => {
         validationSchema: CalendarReportSchema,
         validateOnChange: false,
         onSubmit: async ({ userId, year }, { setSubmitting, setStatus }) => {
-            console.log(userId, year);
-
             setSubmitting(true);
             setStatus(null);
             const { errors } = await getCalendarReport(year, userId);
