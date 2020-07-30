@@ -4,7 +4,6 @@ WORKDIR /usr/src/app
 COPY . ./
 RUN yarn
 RUN yarn build
-RUN ls -lha && ls -lha build && ls -lha public
 
 #stage 2
 FROM nginx
